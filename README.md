@@ -152,3 +152,76 @@ seaborn
 ## License
 
 This project is for educational and research purposes. The Global Terrorism Database is maintained by the National Consortium for the Study of Terrorism and Responses to Terrorism (START) at the University of Maryland.
+
+---
+
+## ETL Pipeline Script
+
+`scripts/etl_pipeline.py` replicates the full cleaning pipeline from the notebooks as a single runnable script — no Jupyter required.
+
+### What it does
+
+| Stage | Action |
+|---|---|
+| **Extract** | Reads `data/raw/globalterrorismdb_0718dist.csv` with `latin-1` encoding |
+| **Transform** | Selects and renames the 9 relevant columns, replaces empty strings and `'Unknown'` placeholders with `NaN`, drops all rows with any missing value, resets the index |
+| **Load** | Saves the cleaned DataFrame to `data/processed/gtd_cleaned.csv` |
+
+### Output
+
+```
+=======================================================
+  GoldDigger ETL Pipeline
+=======================================================
+[Extract] Reading: .../data/raw/globalterrorismdb_0718dist.csv
+[Extract] Loaded 181,691 rows × 135 columns
+[Transform] After column selection: (181691, 9)
+[Transform] Dropped 147,423 rows with missing values
+[Transform] Final shape: (34268, 9)
+[Transform] Validation passed — no missing values
+[Load] Saved 34,268 rows to: .../data/processed/gtd_cleaned.csv
+=======================================================
+  Pipeline complete.
+=======================================================
+```
+
+---
+
+## Notebook 5 — Final Load & Analytical Insights
+
+`05_final_load_prep.ipynb` is the culmination of the pipeline. It loads the cleaned data, engineers new features, and produces three advanced insight layers.
+
+**Data lineage:** Raw (N1) → Cleaned (N2) → Explored (N3) → Tested (N4) → Insights (N5)
+
+### Feature Engineering
+
+| New Column | Description |
+|---|---|
+| `Month_Name` | Human-readable month label (Jan–Dec) |
+| `Decade` | Temporal bucket (1970, 1980, …, 2010) |
+| `Operating_Mode` | `Organized Group` or `Individual Actor` |
+| `Incident_Scale` | `Immediate (<24h)` or `Siege/Extended (>24h)` |
+
+### Insight Layers
+
+**Layer 1 — Geography of Risk**
+A decadal heatmap showing how the regional share of global incidents has shifted over 50 years. Confirms a major migration of conflict concentration from Western Europe and South America (1970–1990) to South Asia and MENA (2000–present).
+
+**Layer 2 — Tactics & Patterns**
+Bar chart of siege-tactic propensity (extended duration attacks) by region. South Asia shows not only high volume but also a higher rate of siege tactics, implying well-coordinated logistical structures.
+
+**Layer 3 — Root Motives (NLP)**
+NMF topic modeling on the `Reason` free-text field extracts four recurring motive themes:
+- Self-determination (autonomy / independence)
+- Retaliatory action (protesting military operations)
+- Political influence (interfering with elections)
+
+### Output
+
+Exports an enriched dataset to `data/processed/gtd_final_insights.csv` with the new feature columns appended.
+
+### Future Directions
+
+- **Sentiment Analysis** — apply VADER or TextBlob to motives to gauge emotional intensity
+- **Geospatial Clustering** — use coordinate data with DBSCAN or K-Means to identify non-administrative conflict zones
+- **Time-Series Forecasting** — ARIMA-based attack frequency predictions
