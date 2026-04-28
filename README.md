@@ -8,6 +8,18 @@ An end-to-end data analysis project exploring global terrorism patterns using th
 
 This project investigates trends, geographic distributions, attack types, and casualty patterns in terrorist incidents recorded over nearly five decades. The analysis pipeline covers data extraction, cleaning, exploratory data analysis (EDA), and statistical analysis.
 
+## Results & Key Findings
+- Peak year of global terrorism: 2014 (~16,900 incidents)
+- Most impacted region: Middle East & North Africa (MENA)
+- Most impacted country: Iraq
+- Most common attack type: Bombing/Explosion
+- Average casualties per incident: 2.3
+- Total incidents processed: 34,268
+- Top terrorist group: Taliban
+
+## Tableau Dashboard
+[Link will be added after publishing to Tableau Public]
+
 ---
 
 ## Dataset
