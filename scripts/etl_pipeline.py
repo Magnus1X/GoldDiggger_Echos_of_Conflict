@@ -1,15 +1,3 @@
-"""
-ETL Pipeline — GoldDigger: Echoes of Conflict
-==============================================
-Replicates the full pipeline from the notebooks:
-  1. Extract  — load raw GTD CSV
-  2. Transform — select, rename, clean columns
-  3. Load      — save cleaned CSV to data/processed/
-
-Usage:
-    python scripts/etl_pipeline.py
-"""
-
 import os
 import warnings
 import pandas as pd
